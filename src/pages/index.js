@@ -1,13 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
-import {Motion, StaggeredMotion, spring, TransitionMotion, presets} from 'react-motion'
+import {Motion, StaggeredMotion, spring, TransitionMotion} from 'react-motion'
 import styles from './index.less';
 
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      left: 100,
+      left: 150,
       opt: 0.5,
       length: 0,
       motion1: { stiffness: 140, damping: 26 },
@@ -26,7 +26,6 @@ export default class extends React.Component {
   // 滚动触发的回调函数
   handleScroll = () => {
     const scrollTop = document.body.scrollTop ||  document.documentElement.scrollTop  // Edge || chrome/IE
-    console.log('scrollTop :', scrollTop);
     this.motionRender2(scrollTop)
     this.motionRender(scrollTop)
     this.motionRender3(scrollTop)
@@ -36,10 +35,10 @@ export default class extends React.Component {
     const { left } = this.state
     if (scrollTop > 400 && left === 0) {
       this.setState({
-        left: 100
+        left: 150
       })
     }
-    if (scrollTop < 373 && left === 100) {
+    if (scrollTop < 373 && left === 150) {
       this.setState({
         left: 0
       })
@@ -95,15 +94,15 @@ export default class extends React.Component {
       8: require('../assets/motion8.jpg'),
     }
     return (
-      <div className={styles.normal} id="">
+      <div className={styles.normal} >
         <div className={styles.item1}>
           <div className={classNames(styles.itemHeader, styles.motionBottom)}>react-motion中的&lt;Motion&gt;</div>
           <div className={styles.item1Text1}>
-            <Motion defaultStyle={{x: 300, opt: 0}}style={{x: spring(this.state.left, motion1), opt: spring(1, motion1) }}>
+            <Motion defaultStyle={{x: 150, opt: 0}} style={{x: spring(this.state.left, motion1) }}>
               {interpolatingStyle => {
                 // debugger
                 return (
-                  <div style={{transform: `translateX(${interpolatingStyle.x}px)`, opacity: interpolatingStyle.opt }} className='box'>
+                  <div style={{transform: `translateX(${interpolatingStyle.x}px)` }}>
                     <h1>君不见</h1>
                     <h1>黄河之水天上来</h1>
                     <h1>奔流到海不复回</h1>
@@ -146,7 +145,7 @@ export default class extends React.Component {
           <div className={styles.motionBox}>
             <TransitionMotion styles={this.state.show ? [{
               key: 'test',
-              style: { scale: spring(1, { stiffness: 140, damping: 60 }) }
+              style: { scale: spring(1, { stiffness: 140, damping: 20 }) }
             }] : []}
               willEnter={this.willEnter}
               willLeave={this.willLeave}>
